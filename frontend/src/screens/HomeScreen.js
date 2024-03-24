@@ -1,36 +1,40 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "react-bootstrap";
-import Product from "../components/Product";
+import Trainer from "../components/Trainer"; // Updated import
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { listProducts } from "../actions/productActions";
+import { listTrainers } from "../actions/trainerActions"; // Updated import
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listTrainers()); // Updated action creator
   }, [dispatch]);
 
-  const productList = useSelector((state) => state.productList);
+  const trainerList = useSelector((state) => state.trainerList); // Updated state selector
 
-  const { loading, error, products } = productList;
+  const { loading, error, trainers } = trainerList; // Updated variable names
 
   return (
     <>
-      <h1>Latest</h1>
+      <h1>Latest Trainers</h1> {/* Updated header */}
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4}>
-              <Product product={product} />
-            </Col>
-          ))}
+          {trainers.map(
+            (
+              trainer // Updated variable name
+            ) => (
+              <Col key={trainer._id} sm={12} md={6} lg={4}>
+                <Trainer trainer={trainer} /> {/* Updated prop */}
+              </Col>
+            )
+          )}
         </Row>
       )}
     </>

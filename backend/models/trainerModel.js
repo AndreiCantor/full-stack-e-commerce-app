@@ -18,7 +18,30 @@ const reviewSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const productSchema = mongoose.Schema(
+const programSchema = mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
+
+const trainerSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -30,10 +53,6 @@ const productSchema = mongoose.Schema(
       required: true,
     },
     image: {
-      type: String,
-      required: true,
-    },
-    brand: {
       type: String,
       required: true,
     },
@@ -56,17 +75,13 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    price: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
+    programs: [programSchema],
   },
   {
     timestamps: true,
   }
 );
 
-const Product = mongoose.model("Product", productSchema);
+const Trainer = mongoose.model("Trainer", trainerSchema);
 
-export default Product;
+export default Trainer;

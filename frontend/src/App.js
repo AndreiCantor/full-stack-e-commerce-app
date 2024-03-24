@@ -2,8 +2,9 @@ import Header from "./components/Header";
 import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
-import ProductScreen from "./screens/ProductScreen";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import TrainerScreen from "./screens/TrainerScreen";
+import CartScreen from "./screens/CartScreen";
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
         <Container>
           <Routes>
             <Route path="/" element={<HomeScreen />} exact />
-            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/trainers/:id" element={<TrainerScreen />} />
+            <Route path="/cart/:trainerId?/:id?" element={<CartScreen />} />
           </Routes>
         </Container>
       </main>

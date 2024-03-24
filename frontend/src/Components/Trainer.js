@@ -4,24 +4,24 @@ import { Card } from "react-bootstrap";
 import Rating from "./Rating";
 import PropTypes from "prop-types";
 
-const Product = ({ product }) => {
+const Trainer = ({ trainer }) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant="top" />
+      <Link to={`/trainers/${trainer._id}`}>
+        <Card.Img src={trainer.image} variant="top" />
       </Link>
 
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
+        <Link to={`/trainers/${trainer._id}`}>
           <Card.Title as="div">
-            <strong>{product.name}</strong>
+            <strong>{trainer.name}</strong>
           </Card.Title>
         </Link>
 
         <Card.Text as="div">
           <Rating
-            value={product.rating}
-            text={`${product.numReviews} reviews`}
+            value={trainer.rating}
+            text={`${trainer.numReviews} reviews`}
           />
         </Card.Text>
       </Card.Body>
@@ -29,8 +29,8 @@ const Product = ({ product }) => {
   );
 };
 
-Rating.propTypes = {
-  value: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
+Trainer.propTypes = {
+  trainer: PropTypes.object.isRequired,
 };
-export default Product;
+
+export default Trainer;
