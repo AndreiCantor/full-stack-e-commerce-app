@@ -22,7 +22,6 @@ const TrainerScreen = () => {
   }, [dispatch, id]);
 
   const addToCartHandler = (program) => {
-    // console.log(program._id);
     navigate(`/cart/${id}/${program._id}`);
     //  dispatch(addToCart(program, id));
   };
