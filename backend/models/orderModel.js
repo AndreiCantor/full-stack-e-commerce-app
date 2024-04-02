@@ -13,19 +13,11 @@ const orderSchema = mongoose.Schema(
           type: String,
           required: true,
         },
-        qty: {
-          type: Number,
-          required: true,
-        },
-        image: {
-          type: String,
-          required: true,
-        },
         price: {
           type: Number,
           required: true,
         },
-        product: {
+        program: {
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: "Program",
@@ -38,10 +30,6 @@ const orderSchema = mongoose.Schema(
         required: true,
       },
       city: {
-        type: String,
-        required: true,
-      },
-      postalCode: {
         type: String,
         required: true,
       },
@@ -73,11 +61,11 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
-    shippingPrice: {
-      type: Number,
-      required: true,
-      default: 0.0,
-    },
+    // shippingPrice: {
+    //   type: Number,
+    //   required: true,
+    //   default: 0.0,
+    // },
     totalPrice: {
       type: Number,
       required: true,

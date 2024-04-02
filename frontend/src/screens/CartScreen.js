@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, ListGroup, Button, Card } from "react-bootstrap";
 import Message from "../components/Message";
@@ -8,11 +8,13 @@ import { addToCart, removeFromCart } from "../actions/cartActions";
 const CartScreen = () => {
   const { id: programId, trainerId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const { cartItems } = cart;
 
   useEffect(() => {
-    console.log("<<<", programId, "<<< ", trainerId);
     if (programId && trainerId) {
       dispatch(addToCart(programId, trainerId));
     }
@@ -23,7 +25,7 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
-    console.log("ok");
+    userInfo ? navigate("/shipping") : navigate("/login");
   };
 
   return (
