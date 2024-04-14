@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Row,
@@ -9,7 +9,6 @@ import {
   ListGroupItem,
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { saveShippingAddress } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,7 +33,7 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      navigate(`/order/${order._id}`);
+      navigate(`/orders/${order._id}`);
     }
   }, [success, navigate]);
 
