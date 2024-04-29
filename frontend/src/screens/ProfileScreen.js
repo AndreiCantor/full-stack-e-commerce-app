@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Row, Col, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
@@ -141,11 +139,11 @@ const ProfileScreen = () => {
                     )}
                   </td>
                   <td>
-                    <Link to={`/orders/${order._id}`}>
+                    <LinkContainer to={`/orders/${order._id}`}>
                       <Button variant="light" className="btn-sm">
                         Details
                       </Button>
-                    </Link>
+                    </LinkContainer>
                   </td>
                 </tr>
               ))}

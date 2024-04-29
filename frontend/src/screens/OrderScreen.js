@@ -1,25 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Row,
-  Col,
-  ListGroup,
-  Image,
-  Card,
-  ListGroupItem,
-} from "react-bootstrap";
+import { Row, Col, ListGroup, Card, ListGroupItem } from "react-bootstrap";
 import { PayPalButton } from "react-paypal-button-v2";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { saveShippingAddress } from "../actions/cartActions";
-import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  createOrder,
-  getOrderDetails,
-  payOrder,
-} from "../actions/orderActions";
+import { getOrderDetails, payOrder } from "../actions/orderActions";
 import Loader from "../components/Loader";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
@@ -30,7 +16,7 @@ const OrderScreen = () => {
   const navigate = useNavigate();
 
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error } = orderDetails;
+  const { order, loading, error, program } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
@@ -146,7 +132,7 @@ const OrderScreen = () => {
                           </Link>
                         </Col>
                         <Col md={4}>${item.price}</Col>
-                        <Col md={4}>{item.category}</Col>
+                        <Col md={4}>{item.program.category}</Col>
                       </Row>
                     </ListGroupItem>
                   ))}
