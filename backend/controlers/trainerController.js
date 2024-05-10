@@ -180,6 +180,16 @@ const createTrainerReview = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc get top rated trainers
+//@route GET /api/trainers/top
+//@access public
+
+const getTopTrainers = asyncHandler(async (req, res) => {
+  const trainers = await Trainer.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(trainers);
+});
+
 export {
   getTrainerById,
   getTrainers,
@@ -189,4 +199,5 @@ export {
   updateTrainer,
   createTrainer,
   createTrainerReview,
+  getTopTrainers,
 };

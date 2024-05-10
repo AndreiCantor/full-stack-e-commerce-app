@@ -4,6 +4,7 @@ import {
   createTrainer,
   createTrainerReview,
   deleteTrainer,
+  getTopTrainers,
   getTrainerById,
   getTrainerProgramsById,
   getTrainerSingleProgramById,
@@ -13,6 +14,7 @@ import {
 import { admin, protect } from "../middleware/authMiddleware.js";
 
 router.route("/").get(getTrainers).post(protect, admin, createTrainer);
+router.get("/top", getTopTrainers);
 router
   .route("/:id")
   .get(getTrainerById)

@@ -16,10 +16,12 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" bg="dark" variant="dark" collapseOnSelect>
+      <Navbar expand="lg" bg="dark" data-bs-theme="dark" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>Myshop</Navbar.Brand>
+            <Navbar.Brand className="text-capitalize">
+              ProFit Connect
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

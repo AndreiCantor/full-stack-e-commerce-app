@@ -5,8 +5,9 @@ import Trainer from "../components/Trainer"; // Updated import
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listTrainers } from "../actions/trainerActions"; // Updated import
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
+import TrainerCarousel from "../components/TrainerCarousel";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,14 @@ const HomeScreen = () => {
 
   return (
     <>
+      <h2 id="home_screen_title">Empowering Personal Trainers Online!</h2>
+      {!keyword ? (
+        <TrainerCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go back!
+        </Link>
+      )}
       <h1>Latest Trainers</h1> {/* Updated header */}
       {loading ? (
         <Loader />
