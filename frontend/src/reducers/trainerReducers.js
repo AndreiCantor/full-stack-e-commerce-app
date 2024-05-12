@@ -20,6 +20,12 @@ import {
   TRAINER_CREATE_REVIEW_SUCCESS,
   TRAINER_CREATE_REVIEW_RESET,
   TRAINER_CREATE_REVIEW_FAIL,
+  TRAINER_TOP_REQUEST,
+  TRAINER_TOP_SUCCESS,
+  TRAINER_TOP_FAIL,
+  TRAINER_SINGLE_PROGRAM_REQUEST,
+  TRAINER_SINGLE_PROGRAM_SUCCESS,
+  TRAINER_SINGLE_PROGRAM_FAIL,
 } from "../constants/trainerConstants"; // Updated import
 
 export const trainerListReducer = (state = { trainers: [] }, action) => {
@@ -111,6 +117,33 @@ export const trainerReviewCreateReducer = (state = {}, action) => {
       return { loading: false, error: action.payload };
     case TRAINER_CREATE_REVIEW_RESET:
       return {};
+    default:
+      return state;
+  }
+};
+
+export const trainerTopRatedReducer = (state = { trainers: [] }, action) => {
+  switch (action.type) {
+    case TRAINER_TOP_REQUEST:
+      return { loading: true, trainers: [] };
+    case TRAINER_TOP_SUCCESS:
+      return { loading: false, trainers: action.payload };
+    case TRAINER_TOP_FAIL:
+      return { loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const programDetailsReducer = (state = { program: {} }, action) => {
+  switch (action.type) {
+    case TRAINER_SINGLE_PROGRAM_REQUEST:
+      return { loading: true, ...state };
+    case TRAINER_SINGLE_PROGRAM_SUCCESS:
+      return { loading: false, program: action.payload };
+    case TRAINER_SINGLE_PROGRAM_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }

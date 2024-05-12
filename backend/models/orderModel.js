@@ -22,6 +22,17 @@ const orderSchema = mongoose.Schema(
           required: true,
           ref: "Program",
         },
+        trainer: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "Trainer",
+        },
+        type: {
+          type: String,
+        },
+        category: {
+          type: String,
+        },
       },
     ],
     shippingAddress: {

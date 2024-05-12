@@ -60,7 +60,6 @@ const TrainerScreen = () => {
 
   const addToCartHandler = (program) => {
     navigate(`/cart/${id}/${program._id}`);
-    //  dispatch(addToCart(program, id));
   };
 
   return (
@@ -113,7 +112,9 @@ const TrainerScreen = () => {
                           <ListGroup.Item>
                             <Row>
                               <Col>
-                                <Link to={`/program/${program._id}`}>
+                                <Link
+                                  to={`/trainers/${trainer._id}/programs/${program._id}`}
+                                >
                                   <Card.Title>{program.title}</Card.Title>
                                 </Link>
                               </Col>

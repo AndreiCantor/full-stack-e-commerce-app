@@ -42,7 +42,7 @@ const CartScreen = () => {
               <ListGroup.Item key={item.program}>
                 <Row>
                   <Col md={2}>
-                    {item.category === "Workout Plan" ? (
+                    {item.type === "workout" ? (
                       <i
                         className="fas fa-dumbbell"
                         style={{ fontSize: "2.2rem" }}
@@ -55,7 +55,9 @@ const CartScreen = () => {
                     )}
                   </Col>
                   <Col md={3}>
-                    <Link to={`/program/${item.program}`}>
+                    <Link
+                      to={`/trainers/${item.trainer}/programs/${item.program}`}
+                    >
                       <Card.Title>{item.name}</Card.Title>
                     </Link>
                   </Col>

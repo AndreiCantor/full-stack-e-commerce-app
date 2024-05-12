@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   CART_ADD_ITEM,
+  CART_CLEAR_ITEMS,
   CART_REMOVE_ITEM,
   CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
@@ -16,10 +17,12 @@ export const addToCart =
       dispatch({
         type: CART_ADD_ITEM,
         payload: {
+          trainer: trainerId,
           program: data._id,
           name: data.title,
           category: data.category,
           price: data.price,
+          type: data.type,
         },
       });
 
@@ -32,9 +35,6 @@ export const addToCart =
         "Error adding to cart:",
         error.response?.data || error.message
       );
-      // Dispatch an action to handle error state in Redux store or display an error message to the user
-      // For example:
-      // dispatch({ type: CART_ADD_ERROR, payload: error.response?.data || error.message });
     }
   };
 
@@ -63,4 +63,12 @@ export const savePaymentMethod = (data) => (dispatch) => {
   });
 
   localStorage.setItem("paymentMethod", JSON.stringify(data));
+};
+
+export const clearCart = () => (dispatch) => {
+  dispatch({
+    type: CART_CLEAR_ITEMS,
+  });
+
+  localStorage.removeItem("cartItems");
 };

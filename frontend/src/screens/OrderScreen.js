@@ -16,7 +16,7 @@ const OrderScreen = () => {
   const navigate = useNavigate();
 
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error, program } = orderDetails;
+  const { order, loading, error } = orderDetails;
 
   const orderPay = useSelector((state) => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
@@ -114,7 +114,7 @@ const OrderScreen = () => {
                     <ListGroupItem key={index}>
                       <Row>
                         <Col md={1}>
-                          {item.category === "Workout Plan" ? (
+                          {item.type === "workout" ? (
                             <i
                               className="fas fa-dumbbell"
                               style={{ fontSize: "2.2rem" }}
@@ -127,12 +127,14 @@ const OrderScreen = () => {
                           )}
                         </Col>
                         <Col>
-                          <Link to={`/program/${item.program}`}>
+                          <Link
+                            to={`/trainers/${item.trainer}/programs/${item.program}`}
+                          >
                             {item.name}
                           </Link>
                         </Col>
                         <Col md={4}>${item.price}</Col>
-                        <Col md={4}>{item.program.category}</Col>
+                        <Col md={4}>{item.category}</Col>
                       </Row>
                     </ListGroupItem>
                   ))}

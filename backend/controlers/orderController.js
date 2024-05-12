@@ -16,6 +16,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
     totalPrice,
   } = req.body;
 
+  if (!req.user) {
+    res.status(401); // 401 Unauthorized
+    throw new Error("Not authorized, no user found");
+  }
+
   if (orderItems && orderItems.length === 0) {
     res.status(400);
     throw new Error("No order items");

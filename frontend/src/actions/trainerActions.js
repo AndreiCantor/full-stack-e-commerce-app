@@ -15,6 +15,12 @@ import {
   TRAINER_LIST_FAIL,
   TRAINER_LIST_REQUEST,
   TRAINER_LIST_SUCCESS,
+  TRAINER_SINGLE_PROGRAM_FAIL,
+  TRAINER_SINGLE_PROGRAM_REQUEST,
+  TRAINER_SINGLE_PROGRAM_SUCCESS,
+  TRAINER_TOP_FAIL,
+  TRAINER_TOP_REQUEST,
+  TRAINER_TOP_SUCCESS,
   TRAINER_UPDATE_FAIL,
   TRAINER_UPDATE_REQUEST,
   TRAINER_UPDATE_SUCCESS,
@@ -194,6 +200,50 @@ export const createTrainerReview =
     } catch (error) {
       dispatch({
         type: TRAINER_CREATE_REVIEW_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listTopTrainers = () => async (dispatch) => {
+  try {
+    dispatch({ type: TRAINER_TOP_REQUEST });
+
+    const { data } = await axios.get(`/api/trainers/top`);
+
+    dispatch({
+      type: TRAINER_TOP_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TRAINER_TOP_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listProgramDetails =
+  (trainerId, programId) => async (dispatch) => {
+    try {
+      dispatch({ type: TRAINER_SINGLE_PROGRAM_REQUEST });
+      const { data } = await axios.get(
+        `/api/trainers/${trainerId}/programs/${programId}`
+      );
+
+      dispatch({
+        type: TRAINER_SINGLE_PROGRAM_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: TRAINER_SINGLE_PROGRAM_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

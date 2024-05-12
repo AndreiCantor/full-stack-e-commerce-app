@@ -7,7 +7,9 @@ import {
   trainerDeleteReducer,
   trainerCreateReducer,
   trainerUpdateReducer,
-  trainerReviewCreateReducer, // Updated import
+  trainerReviewCreateReducer,
+  trainerTopRatedReducer,
+  programDetailsReducer, // Updated import
 } from "./reducers/trainerReducers"; // Updated import
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -34,6 +36,8 @@ const reducer = combineReducers({
   trainerCreate: trainerCreateReducer,
   trainerUpdate: trainerUpdateReducer,
   trainerReviewCreate: trainerReviewCreateReducer,
+  trainerTopRated: trainerTopRatedReducer,
+  programDetails: programDetailsReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

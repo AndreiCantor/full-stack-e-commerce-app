@@ -13,6 +13,8 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
 import { Link, useNavigate } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
+import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { clearCart } from "../actions/cartActions";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -33,11 +35,14 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
+      dispatch({ type: ORDER_CREATE_RESET });
       navigate(`/orders/${order._id}`);
+      dispatch(clearCart());
     }
-  }, [success, navigate]);
+  }, [success, navigate, dispatch]);
 
   const placeOrderHandler = () => {
+    console.log(cart.cartItems);
     dispatch(
       createOrder({
         orderItems: cart.cartItems,
@@ -79,7 +84,7 @@ const PlaceOrderScreen = () => {
                     <ListGroupItem key={index}>
                       <Row>
                         <Col md={1}>
-                          {item.category === "Workout Plan" ? (
+                          {item.type === "workout" ? (
                             <i
                               className="fas fa-dumbbell"
                               style={{ fontSize: "2.2rem" }}

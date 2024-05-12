@@ -42,6 +42,10 @@ const programSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    type: {
+      type: String,
+      enum: ["workout", "diet"],
+    },
   },
   { timestamps: true }
 );
