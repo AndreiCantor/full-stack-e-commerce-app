@@ -9,7 +9,11 @@ import {
   trainerUpdateReducer,
   trainerReviewCreateReducer,
   trainerTopRatedReducer,
-  programDetailsReducer, // Updated import
+  programDetailsReducer,
+  trainerProgramsReducer,
+  trainerProgramCreateReducer,
+  trainerProgramUpdateReducer,
+  trainerProgramDeleteReducer,
 } from "./reducers/trainerReducers"; // Updated import
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -28,6 +32,7 @@ import {
   orderListReducer,
   orderPayReducer,
 } from "./reducers/orderReducers";
+import { contactEmailReducer } from "./reducers/contactReducers";
 
 const reducer = combineReducers({
   trainerList: trainerListReducer,
@@ -37,6 +42,10 @@ const reducer = combineReducers({
   trainerUpdate: trainerUpdateReducer,
   trainerReviewCreate: trainerReviewCreateReducer,
   trainerTopRated: trainerTopRatedReducer,
+  trainerPrograms: trainerProgramsReducer,
+  trainerProgramCreate: trainerProgramCreateReducer,
+  trainerProgramUpdate: trainerProgramUpdateReducer,
+  trainerProgramDelete: trainerProgramDeleteReducer,
   programDetails: programDetailsReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
@@ -51,6 +60,7 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  contactEmail: contactEmailReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

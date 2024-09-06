@@ -18,6 +18,9 @@ import TrainerListScreen from "./screens/TrainerListScreen";
 import TrainerEditScreen from "./screens/TrainerEditScreen";
 import OrdersListScreen from "./screens/OrdersListScreen";
 import ProgramScreen from "./screens/ProgramScreen";
+import TrainerProgramsListScreen from "./screens/TrainerProgramsListScreen";
+import ProgramEditScreen from "./screens/ProgramEditScreen";
+import ContactScreen from "./screens/ContactScreen";
 
 const App = () => {
   return (
@@ -40,6 +43,8 @@ const App = () => {
               element={<HomeScreen />}
               exact
             />
+
+            <Route path="/contact" element={<ContactScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
             <Route path="/trainers/:id" element={<TrainerScreen />} />
             <Route
@@ -58,6 +63,15 @@ const App = () => {
               path="/admin/trainer/:id/edit"
               element={<TrainerEditScreen />}
             />
+            <Route
+              path="/admin/:id/programlist"
+              element={<TrainerProgramsListScreen />}
+            />
+            <Route
+              path="/admin/:trainerId?/program/:programId?/edit"
+              element={<ProgramEditScreen />}
+            />
+
             <Route path="/admin/orderlist" element={<OrdersListScreen />} />
           </Routes>
         </Container>

@@ -5,15 +5,22 @@ const trainers = [
     category: "Fitness",
     description: "Certified personal trainer with 10 years of experience.",
     reviews: [],
-    rating: 0,
-    numReviews: 0,
+    rating: 4,
+    numReviews: 2,
     programs: [
       {
         title: "Full Body Workout",
         description: "A comprehensive workout targeting all muscle groups.",
         category: "Fitness",
         price: 50,
-        type: "workout", // Optional property
+        type: "workout",
+      },
+      {
+        title: "Diet program",
+        description: "An advanced nutrition program suitable for weight loss",
+        category: "Nutrition",
+        price: 60,
+        type: "diet",
       },
     ],
   },
@@ -23,8 +30,8 @@ const trainers = [
     category: "Yoga",
     description: "Experienced yoga instructor specializing in hatha yoga.",
     reviews: [],
-    rating: 0,
-    numReviews: 0,
+    rating: 3.5,
+    numReviews: 5,
     programs: [
       {
         title: "Beginner Yoga",
@@ -79,7 +86,6 @@ const trainers = [
           "Targeted exercises to strengthen and tone the core muscles.",
         category: "Pilates",
         price: 45,
-        // No type specified, illustrating optionality
       },
     ],
   },

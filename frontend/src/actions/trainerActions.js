@@ -15,6 +15,18 @@ import {
   TRAINER_LIST_FAIL,
   TRAINER_LIST_REQUEST,
   TRAINER_LIST_SUCCESS,
+  TRAINER_PROGRAMS_FAIL,
+  TRAINER_PROGRAMS_REQUEST,
+  TRAINER_PROGRAMS_SUCCESS,
+  TRAINER_PROGRAM_CREATE_FAIL,
+  TRAINER_PROGRAM_CREATE_REQUEST,
+  TRAINER_PROGRAM_CREATE_SUCCESS,
+  TRAINER_PROGRAM_DELETE_FAIL,
+  TRAINER_PROGRAM_DELETE_REQUEST,
+  TRAINER_PROGRAM_DELETE_SUCCESS,
+  TRAINER_PROGRAM_UPDATE_FAIL,
+  TRAINER_PROGRAM_UPDATE_REQUEST,
+  TRAINER_PROGRAM_UPDATE_SUCCESS,
   TRAINER_SINGLE_PROGRAM_FAIL,
   TRAINER_SINGLE_PROGRAM_REQUEST,
   TRAINER_SINGLE_PROGRAM_SUCCESS,
@@ -244,6 +256,129 @@ export const listProgramDetails =
     } catch (error) {
       dispatch({
         type: TRAINER_SINGLE_PROGRAM_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const listTrainerPrograms = (trainerId) => async (dispatch) => {
+  try {
+    dispatch({ type: TRAINER_PROGRAMS_REQUEST });
+    const { data } = await axios.get(`/api/trainers/${trainerId}/programs`);
+
+    dispatch({
+      type: TRAINER_PROGRAMS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: TRAINER_PROGRAMS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const createTrainerProgram =
+  (trainerId, program) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: TRAINER_PROGRAM_CREATE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.post(
+        `/api/trainers/${trainerId}/programs`,
+        program,
+        config
+      );
+      dispatch({
+        type: TRAINER_PROGRAM_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: TRAINER_PROGRAM_CREATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const updateTrainerProgram =
+  (trainerId, programId, program) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: TRAINER_PROGRAM_UPDATE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/trainers/${trainerId}/programs/${programId}`,
+        program,
+        config
+      );
+      dispatch({
+        type: TRAINER_PROGRAM_UPDATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: TRAINER_PROGRAM_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+export const deleteTrainerProgram =
+  (trainerId, programId) => async (dispatch, getState) => {
+    try {
+      dispatch({ type: TRAINER_PROGRAM_DELETE_REQUEST });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await axios.delete(
+        `/api/trainers/${trainerId}/programs/${programId}`,
+        config
+      );
+      dispatch({ type: TRAINER_PROGRAM_DELETE_SUCCESS });
+    } catch (error) {
+      dispatch({
+        type: TRAINER_PROGRAM_DELETE_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

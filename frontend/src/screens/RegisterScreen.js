@@ -13,6 +13,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const [validated, set_Validated] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,13 +31,19 @@ const RegisterScreen = () => {
     }
   }, [navigate, userInfo, redirect]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
+  const submitHandler = (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    if (!form.checkValidity()) {
+      event.stopPropagation();
+    } else if (password !== confirmPassword) {
       setMessage("Passwords do not match!");
     } else {
       dispatch(register(name, email, password));
     }
+
+    set_Validated(true); // Trigger validation feedback
   };
 
   return (
@@ -45,15 +52,21 @@ const RegisterScreen = () => {
       {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
+      <Form noValidate validated={validated} onSubmit={submitHandler}>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
             placeholder="Enter name"
             value={name}
+            pattern="^[a-zA-Z0-9]+$"
+            required
             onChange={(e) => setName(e.target.value)}
+            isInvalid={validated && !/^[a-zA-Z0-9]+$/.test(name)}
           ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid username (alphanumeric characters only).
+          </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -62,7 +75,12 @@ const RegisterScreen = () => {
             placeholder="Enter email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
+            isInvalid={validated && !/^\S+@\S+\.\S+$/.test(email)}
           ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Please enter a valid email address.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="password">
@@ -71,8 +89,14 @@ const RegisterScreen = () => {
             type="password"
             placeholder="Enter password"
             value={password}
+            minLength={6}
+            required
             onChange={(e) => setPassword(e.target.value)}
+            isInvalid={validated && password.length < 6}
           ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Password must be at least 6 characters long.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group controlId="confirmPassword">
@@ -81,8 +105,14 @@ const RegisterScreen = () => {
             type="password"
             placeholder="Confirm password"
             value={confirmPassword}
+            required
             onChange={(e) => setConfirmPassword(e.target.value)}
+            pattern={password}
+            isInvalid={validated && confirmPassword !== password}
           ></Form.Control>
+          <Form.Control.Feedback type="invalid">
+            Passwords do not match.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Button type="submit" variant="primary" className="mt-3">

@@ -26,39 +26,50 @@ import {
   TRAINER_SINGLE_PROGRAM_REQUEST,
   TRAINER_SINGLE_PROGRAM_SUCCESS,
   TRAINER_SINGLE_PROGRAM_FAIL,
-} from "../constants/trainerConstants"; // Updated import
+  TRAINER_PROGRAMS_REQUEST,
+  TRAINER_PROGRAMS_SUCCESS,
+  TRAINER_PROGRAMS_FAIL,
+  TRAINER_PROGRAM_CREATE_REQUEST,
+  TRAINER_PROGRAM_CREATE_SUCCESS,
+  TRAINER_PROGRAM_CREATE_FAIL,
+  TRAINER_PROGRAM_CREATE_RESET,
+  TRAINER_PROGRAM_DELETE_REQUEST,
+  TRAINER_PROGRAM_DELETE_SUCCESS,
+  TRAINER_PROGRAM_DELETE_FAIL,
+  TRAINER_PROGRAM_UPDATE_REQUEST,
+  TRAINER_PROGRAM_UPDATE_SUCCESS,
+  TRAINER_PROGRAM_UPDATE_FAIL,
+} from "../constants/trainerConstants";
 
 export const trainerListReducer = (state = { trainers: [] }, action) => {
-  // Renamed reducer to trainerListReducer
   switch (action.type) {
-    case TRAINER_LIST_REQUEST: // Updated constant
-      return { loading: true, trainers: [] }; // Updated property name
-    case TRAINER_LIST_SUCCESS: // Updated constant
+    case TRAINER_LIST_REQUEST:
+      return { loading: true, trainers: [] };
+    case TRAINER_LIST_SUCCESS:
       return {
         loading: false,
         trainers: action.payload.trainers,
         pages: action.payload.pages,
         page: action.payload.page,
       };
-    case TRAINER_LIST_FAIL: // Updated constant
-      return { loading: false, error: action.payload }; // Updated constant
+    case TRAINER_LIST_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
 export const trainerDetailsReducer = (
-  // Renamed reducer to trainerDetailsReducer
-  state = { trainer: { reviews: [] } }, // Updated initial state
+  state = { trainer: { reviews: [] } },
   action
 ) => {
   switch (action.type) {
-    case TRAINER_DETAILS_REQUEST: // Updated constant
-      return { loading: true, ...state }; // Updated constant
-    case TRAINER_DETAILS_SUCCESS: // Updated constant
-      return { loading: false, trainer: action.payload }; // Updated constant and property name
-    case TRAINER_DETAILS_FAIL: // Updated constant
-      return { loading: false, error: action.payload }; // Updated constant
+    case TRAINER_DETAILS_REQUEST:
+      return { loading: true, ...state };
+    case TRAINER_DETAILS_SUCCESS:
+      return { loading: false, trainer: action.payload };
+    case TRAINER_DETAILS_FAIL:
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
@@ -143,6 +154,63 @@ export const programDetailsReducer = (state = { program: {} }, action) => {
     case TRAINER_SINGLE_PROGRAM_SUCCESS:
       return { loading: false, program: action.payload };
     case TRAINER_SINGLE_PROGRAM_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const trainerProgramsReducer = (state = { programs: [] }, action) => {
+  switch (action.type) {
+    case TRAINER_PROGRAMS_REQUEST:
+      return { loading: true, programs: [] };
+    case TRAINER_PROGRAMS_SUCCESS:
+      return { loading: false, programs: action.payload };
+    case TRAINER_PROGRAMS_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const trainerProgramCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TRAINER_PROGRAM_CREATE_REQUEST:
+      return { loading: true };
+    case TRAINER_PROGRAM_CREATE_SUCCESS:
+      return { loading: false, success: true, program: action.payload };
+    case TRAINER_PROGRAM_CREATE_FAIL:
+      return { loading: false, error: action.payload };
+    case TRAINER_PROGRAM_CREATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const trainerProgramDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case TRAINER_PROGRAM_DELETE_REQUEST:
+      return { loading: true };
+    case TRAINER_PROGRAM_DELETE_SUCCESS:
+      return { loading: false, success: true, program: action.payload };
+    case TRAINER_PROGRAM_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const trainerProgramUpdateReducer = (
+  state = { program: {} },
+  action
+) => {
+  switch (action.type) {
+    case TRAINER_PROGRAM_UPDATE_REQUEST:
+      return { loading: true };
+    case TRAINER_PROGRAM_UPDATE_SUCCESS:
+      return { loading: false, success: true, program: action.payload };
+    case TRAINER_PROGRAM_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

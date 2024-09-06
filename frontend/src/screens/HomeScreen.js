@@ -16,12 +16,12 @@ const HomeScreen = () => {
   const { pageNumber } = useParams();
 
   useEffect(() => {
-    dispatch(listTrainers(keyword, pageNumber)); // Updated action creator
+    dispatch(listTrainers(keyword, pageNumber));
   }, [dispatch, keyword, pageNumber]);
 
-  const trainerList = useSelector((state) => state.trainerList); // Updated state selector
+  const trainerList = useSelector((state) => state.trainerList);
 
-  const { loading, error, trainers, page, pages } = trainerList; // Updated variable names
+  const { loading, error, trainers, page, pages } = trainerList;
 
   return (
     <>
@@ -33,23 +33,21 @@ const HomeScreen = () => {
           Go back!
         </Link>
       )}
-      <h1>Latest Trainers</h1> {/* Updated header */}
+      <h1>Latest Trainers</h1>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
+      ) : trainers.length === 0 ? (
+        <Message variant="info">No trainers to display.</Message>
       ) : (
         <>
           <Row>
-            {trainers.map(
-              (
-                trainer // Updated variable name
-              ) => (
-                <Col key={trainer._id} sm={12} md={6} lg={4}>
-                  <Trainer trainer={trainer} /> {/* Updated prop */}
-                </Col>
-              )
-            )}
+            {trainers.map((trainer) => (
+              <Col key={trainer._id} sm={12} md={6} lg={4}>
+                <Trainer trainer={trainer} />
+              </Col>
+            ))}
           </Row>
           <Paginate
             pages={pages}

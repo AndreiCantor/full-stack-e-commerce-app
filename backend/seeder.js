@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import colors from "colors";
 import users from "./data/users.js";
-import products from "./data/products.js";
 import trainers from "./data/trainers.js";
 import User from "./models/userModel.js";
 import Order from "./models/orderModel.js";
@@ -20,13 +19,8 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
-    const adminUser = createdUsers[0]._id;
 
-    const sampleTrainers = trainers.map((trainer) => {
-      return { ...trainer, user: adminUser };
-    });
-
-    await Trainer.insertMany(sampleTrainers);
+    await Trainer.insertMany(trainers);
 
     console.log("Data Imported!".green.inverse);
     process.exit();

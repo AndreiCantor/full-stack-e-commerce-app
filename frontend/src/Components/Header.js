@@ -27,6 +27,11 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <SearchBox />
             <Nav style={{ marginLeft: "auto" }}>
+              <LinkContainer to="/contact">
+                <Nav.Link>
+                  <i className="fa-solid fa-envelope"></i>Contact
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <i className="fa-solid fa-cart-shopping"></i>Cart

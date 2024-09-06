@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
+import nodemailer from "nodemailer";
 
 //@desc Create new Order
 //@route POST /api/orders
@@ -39,6 +40,31 @@ const addOrderItems = asyncHandler(async (req, res) => {
 
     const createdOrder = await order.save();
 
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_PERSONAL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_PERSONAL,
+      to: req.user.email,
+      subject: "Order Confirmation",
+      text: `Thank you ${req.user.name} for your order!\n\nOrder ID: ${
+        createdOrder._id
+      }\n\nOrder Details:\n${orderItems.map(
+        (item) => `${item.name} - $${item.price}\n`
+      )}\nTotal: $${totalPrice} `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+
     res.status(201).json(createdOrder);
   }
 });
@@ -62,7 +88,7 @@ const getOrderById = asyncHandler(async (req, res) => {
 });
 
 //@desc Update order to paid
-//@route GET /api/orders/:id/pay
+//@route PUT /api/orders/:id/pay
 //@access Private
 
 const updateOrderToPaid = asyncHandler(async (req, res) => {
@@ -79,6 +105,31 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     };
 
     const updatedOrder = await order.save();
+
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_PERSONAL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL_PERSONAL,
+      to: order.user.email,
+      subject: "Order Paid Confirmation",
+      text: `Your order has been paid successfully!\n\nOrder ID: ${
+        updatedOrder._id
+      }\n\nOrder Details:\n${updatedOrder.orderItems.map(
+        (item) => `${item.name} - $${item.price}\n`
+      )}\nTotal: $${updatedOrder.totalPrice}`,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
 
     res.json(updatedOrder);
   } else {

@@ -16,7 +16,7 @@ const getTrainers = asyncHandler(async (req, res) => {
         },
       }
     : {};
-  console.log(req.query.pageNumber);
+
   const count = await Trainer.countDocuments({ ...keyword });
   const trainers = await Trainer.find({ ...keyword })
     .limit(pageSize)
@@ -138,6 +138,87 @@ const updateTrainer = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc create a program for a trainer
+//@route post /api/trainers/:id
+//@access private/Admin
+
+const createProgramForTrainer = asyncHandler(async (req, res) => {
+  const trainer = await Trainer.findById(req.params.id);
+  if (trainer) {
+    const { title, description, category, price, type } = req.body;
+    const program = {
+      title,
+      description,
+      category,
+      price,
+      type,
+    };
+    trainer.programs.push(program);
+    await trainer.save();
+    const savedProgram = trainer.programs[trainer.programs.length - 1]; // Get the last program
+    res.status(201).json(savedProgram);
+  } else {
+    res.status(404);
+    throw new Error("Trainer not found");
+  }
+});
+
+//@desc update a program for a trainer
+//@route put /api/trainers/:id/programs/:programId
+//@access private/Admin
+
+const updateProgramForTrainer = asyncHandler(async (req, res) => {
+  const { trainerId, programId } = req.params;
+  const trainer = await Trainer.findById(trainerId);
+
+  if (!trainer) {
+    res.status(404);
+    throw new Error("Trainer not found");
+  }
+
+  const program = trainer.programs.id(programId);
+  if (!program) {
+    res.status(404);
+    throw new Error("Program not found for this trainer");
+  }
+
+  const { title, description, category, price, type } = req.body;
+  program.title = title || program.title;
+  program.description = description || program.description;
+  program.category = category || program.category;
+  program.price = price || program.price;
+  program.type = type || program.type;
+
+  await trainer.save();
+
+  res.json(program);
+});
+
+//@desc delete a program for a trainer
+//@route put /api/trainers/:id/programs/:programId
+//@access private/Admin
+
+const deleteProgramForTrainer = asyncHandler(async (req, res) => {
+  const { trainerId, programId } = req.params; // Ensure these are named correctly as defined in your route
+
+  const trainer = await Trainer.findById(trainerId);
+  if (!trainer) {
+    res.status(404);
+    throw new Error("Trainer not found");
+  }
+
+  // Check if the program exists in the trainer's document
+  const program = trainer.programs.id(programId); // Retrieve the specific program
+  if (!program) {
+    res.status(404);
+    throw new Error("Program not found");
+  }
+
+  program.deleteOne();
+  await trainer.save();
+  res.status(200).json({ message: "Program deleted" });
+});
+
 //@desc Create new review
 //@route POST /api/trainers/:id/reviews
 //@access private
@@ -200,4 +281,7 @@ export {
   createTrainer,
   createTrainerReview,
   getTopTrainers,
+  createProgramForTrainer,
+  updateProgramForTrainer,
+  deleteProgramForTrainer,
 };
